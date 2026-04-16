@@ -12,6 +12,7 @@ import { useSubject } from '../../hooks/useSubject';
 import { SubjectsBar } from './components/SubjectsBar';
 import './students-styles.css';
 import StudentCard from './components/StudentCard';
+import Typography from '../../components/typography/Typography';
 
 const StudentsPage = () => {
     const [drawerState, setDrawerState] = useState<{
@@ -105,6 +106,9 @@ const StudentsPage = () => {
                 </button>
             </div>
 
+            <Typography variant="body" className="subjects-bar-title">
+                Selecciona una materia para ver y gestionar las notas de los estudiantes en esa materia
+            </Typography>
             <SubjectsBar
                 error={subjectsError?.message!}
                 loading={subjectsLoading}
