@@ -1,0 +1,37 @@
+.form-input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    width: 100%;
+}
+
+.form-input-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.form-input-field {
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+/* focus moderno */
+.form-input-field:focus {
+    border-color: #4281AA;
+    box-shadow: 0 0 0 2px rgba(66, 129, 170, 0.2);
+}
+
+/* error */
+.form-input-field.error {
+    border-color: #ef4444;
+}
+
+.form-input-error {
+    font-size: 0.75rem;
+    color: #ef4444;
+}

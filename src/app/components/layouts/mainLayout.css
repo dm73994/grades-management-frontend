@@ -1,0 +1,16 @@
+.MainLayoutContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: #fff;
+    height: 100vh;
+    max-width: 100vdw;
+    max-height: 100vdh;
+}
+
+.MainContent {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    background-color: #f3f3f3;
+}

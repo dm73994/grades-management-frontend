@@ -1,0 +1,70 @@
+.SideBarContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: #013E37;
+    transition: all 0.3s ease;
+}
+
+.open {
+    width: 15rem;
+    transition: all 0.3s ease;
+}
+
+.close {
+    width: 5rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.SideBar-header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 3rem;
+    color: #FFEFB3;
+    padding-inline: 1rem;
+}
+
+.SideBar-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    color: #FFEFB3;
+    cursor: pointer;
+}
+
+.SideBar-content {
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+}
+
+.SideBar-menu {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+}
+
+.SideBar-link {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    color: #FFEFB3;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    gap: 1rem;
+    padding: 0.75rem 0;      
+    padding-left: 1.5rem;   
+    box-sizing: border-box;
+}
+
+.SideBar-link:hover {
+    background-color: #02514B;
+    transition: background-color 0.2s ease;
+}

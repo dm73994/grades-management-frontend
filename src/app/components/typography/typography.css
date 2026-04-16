@@ -1,0 +1,32 @@
+.typography {
+    margin: 0;
+    padding: 0;
+    line-height: 1.4;
+}
+.typography-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.typography-subtitle {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.typography-body {
+    font-size: 1.05rem;
+    color: #374151;
+}
+
+.typography-label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #4b5563;
+}
+
+.typography-caption {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
