@@ -1,0 +1,67 @@
+.students-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background-color: #fff;
+}
+
+.students-table th,
+.students-table td {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.students-table thead {
+    background-color: #f9fafb;
+}
+
+.table-row:hover {
+    background-color: #f3f4f6;
+}
+
+.actions-column {
+    text-align: center;
+    width: 20%;
+}
+
+.actions-cell {
+    width: 1%;
+    white-space: nowrap;
+    display: flex;
+    gap: 0.4rem;
+}
+
+.name-column {
+    width: 20%;
+}
+
+.name-cell {
+    width: 10px;
+    max-width: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.grades-cell {
+    width: 60%;
+}
+
+.grades-container {
+    display: flex;
+    width: 100%;
+    flex-basis: content;
+    justify-content: start;
+    align-items: start;
+}
+
+.grade-item {
+    text-align: center;
+    padding: 0.4rem 1rem;
+    border-right: 1px solid #9d9ea0;
+}
+
+.grade-item:first-child {
+    border-left: 1px solid #9d9ea0;
+}

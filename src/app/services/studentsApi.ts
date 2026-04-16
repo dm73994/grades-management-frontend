@@ -7,7 +7,6 @@ export const getAllStudents = async (): Promise<Student[]> => {
         const response = await customAxios.get<Student[]>("/students");
         return response.data;
     } catch (error) {
-        console.error("Error fetching students:", error);
         throw new Error("Failed to fetch students");
     }
 }
@@ -17,7 +16,6 @@ export const getStudentById = async (id: string): Promise<Student> => {
         const response = await customAxios.get<Student>(`/students/${id}`);
         return response.data;
     } catch (error) {
-        console.error(`Error fetching student with id ${id}:`, error);
         throw new Error(`Failed to fetch student with id ${id}`);
     }
 }
@@ -27,7 +25,6 @@ export const createStudent = async (student: CreateStudentModel): Promise<Studen
         const response = await customAxios.post<Student>("/students", student);
         return response.data;
     } catch (error) {
-        console.error("Error creating student:", error);
         throw new Error("Failed to create student");
     }
 }
@@ -37,7 +34,6 @@ export const updateStudent = async (id: string, student: UpdateStudent): Promise
         const response = await customAxios.put<Student>(`/students/${id}`, student);
         return response.data;
     } catch (error) {
-        console.error(`Error updating student with id ${id}:`, error);
         throw new Error(`Failed to update student with id ${id}`);
     }
 }
@@ -46,7 +42,6 @@ export const deleteStudent = async (id: string): Promise<void> => {
     try {
         await customAxios.delete(`/students/${id}`);
     } catch (error) {
-        console.error(`Error deleting student with id ${id}:`, error);
         throw new Error(`Failed to delete student with id ${id}`);
     }
 }

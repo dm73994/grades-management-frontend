@@ -17,10 +17,18 @@
 .details-card {
     border-radius: 10px;
     padding: 1.2rem;
-
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
+}
+.details-card-shadow {
+    border-radius: 10px;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
 .details-header {
@@ -35,6 +43,13 @@
     gap: 1rem;
 }
 
+.details-flex {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
 .details-item {
     display: flex;
     flex-direction: column;
@@ -43,4 +58,9 @@
 
 .details-item.full {
     grid-column: span 2;
+}
+
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
 }

@@ -1,14 +1,14 @@
 import { useCallback, useState } from 'react';
-import { useRequest } from '../../hooks/useRequest';
+import type { Student } from '../data/models/Student.model';
+import type { CreateStudentModel, UpdateStudent } from '../data/request/StudenRequests';
 import {
-    createStudent,
-    deleteStudent,
     getAllStudents,
     getStudentById,
+    createStudent,
     updateStudent,
-} from '../../services/studentsApi';
-import type { Student } from '../../data/models/Student.model';
-import type { CreateStudentModel, UpdateStudent } from '../../data/request/StudenRequests';
+    deleteStudent,
+} from '../services/studentsApi';
+import { useRequest } from './useRequest';
 
 export const useStudent = () => {
     const [students, setStudents] = useState<Student[]>([]);
@@ -55,7 +55,7 @@ export const useStudent = () => {
 
     const removeStudent = useCallback(
         async (id: string) => {
-            const res = await makeRequest(() => deleteStudent(id));
+            await makeRequest(() => deleteStudent(id));
             setStudents((prev) => prev.filter((s) => s.id !== id));
         },
         [makeRequest],

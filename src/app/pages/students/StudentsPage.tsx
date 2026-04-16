@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Title from '../../components/typography/Title';
-import { useStudent } from './useStudent';
 import Drawer from '../../components/drawer/Drawer';
 import type { Student } from '../../data/models/Student.model';
 import StudentRow from './components/StudentRow';
@@ -8,6 +7,9 @@ import StudentForm from './forms/StudentForm';
 import type { CreateStudentModel, UpdateStudent } from '../../data/request/StudenRequests';
 import Swal from 'sweetalert2';
 import ViewStudentDetails from './components/ViewStudentDetails';
+import { useStudent } from '../../hooks/useStudent';
+import { useSubject } from '../../hooks/useSubject';
+import { SubjectsBar } from './components/SubjectsBar';
 
 interface DrawerState {
     open: boolean;
@@ -16,6 +18,11 @@ interface DrawerState {
 }
 
 const StudentsPage = () => {
+    const [drawerState, setDrawerState] = useState<DrawerState>({
+        open: false,
+        student: null,
+        action: null,
+    });
     const {
         loading,
         error,
@@ -26,11 +33,14 @@ const StudentsPage = () => {
         removeStudent,
         fetchStudentDetails,
     } = useStudent();
-    const [drawerState, setDrawerState] = useState<DrawerState>({
-        open: false,
-        student: null,
-        action: null,
-    });
+    const {
+        loading: subjectsLoading,
+        error: subjectsError,
+        subjects,
+        fetchAllSubjects,
+    } = useSubject();
+
+    const [selectedSubjectId, setSelectedSubjectId] = useState<number | null>(null);
 
     const handleEditStudent = (student: Student) => {
         setDrawerState({
@@ -78,19 +88,36 @@ const StudentsPage = () => {
         });
     };
 
+    const resetDrawerState = () => {
+        setDrawerState({
+            open: false,
+            action: null,
+            student: null,
+        });
+    };
+
     useEffect(() => {
         fetchAllStudents();
+        fetchAllSubjects();
     }, []);
 
     useEffect(() => {
-        if (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: error,
-            });
+        if (selectedSubjectId) {
         }
-    }, [error]);
+    }, [selectedSubjectId]);
+
+    useEffect(() => {
+        if (error || subjectsError) {
+            resetDrawerState();
+            fetchAllStudents();
+            fetchAllSubjects();
+            Swal.fire(
+                'Error',
+                error?.message || subjectsError?.message || 'Ocurrió un error inesperado',
+                'error',
+            );
+        }
+    }, [error, subjectsError]);
 
     return (
         <div className="page-container">
@@ -101,28 +128,43 @@ const StudentsPage = () => {
                 </button>
             </div>
 
-            {loading && <p>Cargando estudiantes...</p>}
-            {error && <p className="error">{error}</p>}
-            {!loading && !error && students.length === 0 && <p>No hay estudiantes registrados.</p>}
+            <SubjectsBar
+                error={subjectsError?.message!}
+                loading={subjectsLoading}
+                subjects={subjects}
+                onSelectSubject={setSelectedSubjectId}
+                selectedId={selectedSubjectId}
+            />
 
+            {loading && <p>Cargando estudiantes...</p>}
+            {!loading && !error && students.length === 0 && <p>No hay estudiantes registrados.</p>}
             {!loading && !error && students.length > 0 && (
                 <table className="students-table">
                     <thead>
                         <tr>
-                            <th>N°</th>
-                            <th>Nombre</th>
                             <th className="actions-column">Acciones</th>
+                            <th className='name-column'>Nombre</th>
+                            {selectedSubjectId && <th>Notas</th>}
                         </tr>
                     </thead>
                     <tbody>
-                        {students.map((student, index) => (
+                        {students.map((student) => (
                             <StudentRow
                                 key={student.id}
                                 data={student}
-                                index={index}
                                 onView={handleViewStudent}
                                 onEdit={handleEditStudent}
                                 onDelete={handleDeleteStudent}
+                                {...(selectedSubjectId && {
+                                    onAddGrade: () => {
+                                        setDrawerState({
+                                            open: true,
+                                            student,
+                                            action: 'view',
+                                        });
+                                    },
+                                    selectedSubjectId,
+                                })}
                             />
                         ))}
                     </tbody>
@@ -176,7 +218,7 @@ const StudentsPage = () => {
                         <ViewStudentDetails
                             studentId={drawerState.student!.id}
                             loadStudentDetails={fetchStudentDetails}
-                            error={error}
+                            error={error?.message || ''}
                         />
                     )}
                 </Drawer>
