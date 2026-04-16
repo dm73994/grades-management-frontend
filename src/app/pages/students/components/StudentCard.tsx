@@ -1,26 +1,19 @@
 import { useEffect } from 'react';
+import Swal from 'sweetalert2';
 import Button from '../../../components/button/Button';
 import type { Student } from '../../../data/models/Student.model';
-import { useGrades } from '../../../hooks/useGrade';
-import Swal from 'sweetalert2';
 import type { CreateGradeModel } from '../../../data/request/GradeRequest';
+import { useGrades } from '../../../hooks/useGrade';
 
-interface StudentRowProps {
+interface StudentCardProps {
     data: Student;
-    index?: number;
     onView?: (student: Student) => void;
     onEdit?: (student: Student) => void;
     onDelete?: (student: Student) => void;
     selectedSubjectId?: number | null;
 }
 
-const StudentRow = ({
-    data,
-    onView,
-    onEdit,
-    onDelete,
-    selectedSubjectId,
-}: StudentRowProps) => {
+const StudentCard = ({ data, onView, onEdit, onDelete, selectedSubjectId }: StudentCardProps) => {
     const { grades, fetchGrades, loading, addGrade, error } = useGrades();
 
     const handleAddGrade = () => {
@@ -37,7 +30,7 @@ const StudentRow = ({
                 const req: CreateGradeModel = {
                     studentId: data.id,
                     subjectId: selectedSubjectId!,
-                    value: result.value,
+                    value: parseFloat(result.value),
                 };
                 await addGrade(req);
             }
@@ -60,8 +53,30 @@ const StudentRow = ({
     }, [error]);
 
     return (
-        <tr className="table-row">
-            <td className="actions-cell">
+        <div className="student-card">
+            <div className="card-top">
+                <span className="card-name">
+                    {data.name} {data.lastname}
+                </span>
+            </div>
+
+            {selectedSubjectId && (
+                <div className="card-grades">
+                    {loading ? (
+                        <span>Cargando...</span>
+                    ) : grades.length > 0 ? (
+                        grades.map((g) => (
+                            <span key={g.id} className="grade-pill">
+                                {g.value}
+                            </span>
+                        ))
+                    ) : (
+                        <span className="no-grades">Sin notas</span>
+                    )}
+                </div>
+            )}
+
+            <div className="card-actions">
                 <Button variant="primary" onClick={() => onView?.(data)}>
                     <span className="material-symbols-rounded">visibility</span>
                 </Button>
@@ -75,38 +90,13 @@ const StudentRow = ({
                 </Button>
 
                 {selectedSubjectId && (
-                    <Button
-                        variant="success"
-                        onClick={() => handleAddGrade()}
-                    >
+                    <Button variant="success" onClick={handleAddGrade}>
                         <span className="material-symbols-rounded">add_circle</span>
                     </Button>
                 )}
-            </td>
-
-            <td className="name-cell">
-                {data.name} {data.lastname}
-            </td>
-
-            {selectedSubjectId && (
-                <td className="grades-cell">
-                    {loading ? (
-                        'Cargando...'
-                    ) : grades.length > 0 ? (
-                        <div className="grades-container">
-                            {grades.map((grade) => (
-                                <div key={grade.id} className="grade-item">
-                                    {grade.value}
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        'No hay notas'
-                    )}
-                </td>
-            )}
-        </tr>
+            </div>
+        </div>
     );
 };
 
-export default StudentRow;
+export default StudentCard;

@@ -147,8 +147,8 @@ const SubjectsPage = () => {
                         drawerState.action === 'create'
                             ? 'Crear nueva materia'
                             : drawerState.action === 'edit'
-                              ? 'Editar materia'
-                              : 'Ver detalles de la materia'
+                            ? 'Editar materia'
+                            : 'Ver detalles de la materia'
                     }
                     open={drawerState.open}
                     onClose={resetDrawerState}

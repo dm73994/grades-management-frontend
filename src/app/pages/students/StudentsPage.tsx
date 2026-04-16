@@ -4,25 +4,26 @@ import Drawer from '../../components/drawer/Drawer';
 import type { Student } from '../../data/models/Student.model';
 import StudentRow from './components/StudentRow';
 import StudentForm from './forms/StudentForm';
-import type { CreateStudentModel, UpdateStudent } from '../../data/request/StudenRequests';
+import type { CreateStudentModel } from '../../data/request/StudenRequests';
 import Swal from 'sweetalert2';
 import ViewStudentDetails from './components/ViewStudentDetails';
 import { useStudent } from '../../hooks/useStudent';
 import { useSubject } from '../../hooks/useSubject';
 import { SubjectsBar } from './components/SubjectsBar';
-
-interface DrawerState {
-    open: boolean;
-    student: Student | null;
-    action: 'view' | 'edit' | 'create' | null;
-}
+import './students-styles.css';
+import StudentCard from './components/StudentCard';
 
 const StudentsPage = () => {
-    const [drawerState, setDrawerState] = useState<DrawerState>({
+    const [drawerState, setDrawerState] = useState<{
+        open: boolean;
+        student: Student | null;
+        action: 'create' | 'edit' | 'view' | null;
+    }>({
         open: false,
         student: null,
         action: null,
     });
+
     const {
         loading,
         error,
@@ -33,6 +34,7 @@ const StudentsPage = () => {
         removeStudent,
         fetchStudentDetails,
     } = useStudent();
+
     const {
         loading: subjectsLoading,
         error: subjectsError,
@@ -43,27 +45,15 @@ const StudentsPage = () => {
     const [selectedSubjectId, setSelectedSubjectId] = useState<number | null>(null);
 
     const handleEditStudent = (student: Student) => {
-        setDrawerState({
-            open: true,
-            student,
-            action: 'edit',
-        });
+        setDrawerState({ open: true, student, action: 'edit' });
     };
 
     const handleCreateStudent = () => {
-        setDrawerState({
-            open: true,
-            student: null,
-            action: 'create',
-        });
+        setDrawerState({ open: true, student: null, action: 'create' });
     };
 
     const handleViewStudent = (student: Student) => {
-        setDrawerState({
-            open: true,
-            student,
-            action: 'view',
-        });
+        setDrawerState({ open: true, student, action: 'view' });
     };
 
     const handleDeleteStudent = async (student: Student) => {
@@ -89,11 +79,7 @@ const StudentsPage = () => {
     };
 
     const resetDrawerState = () => {
-        setDrawerState({
-            open: false,
-            action: null,
-            student: null,
-        });
+        setDrawerState({ open: false, action: null, student: null });
     };
 
     useEffect(() => {
@@ -102,20 +88,11 @@ const StudentsPage = () => {
     }, []);
 
     useEffect(() => {
-        if (selectedSubjectId) {
-        }
-    }, [selectedSubjectId]);
-
-    useEffect(() => {
         if (error || subjectsError) {
             resetDrawerState();
             fetchAllStudents();
             fetchAllSubjects();
-            Swal.fire(
-                'Error',
-                error?.message || subjectsError?.message || 'Ocurrió un error inesperado',
-                'error',
-            );
+            Swal.fire('Error', error?.message || subjectsError?.message, 'error');
         }
     }, [error, subjectsError]);
 
@@ -138,37 +115,46 @@ const StudentsPage = () => {
 
             {loading && <p>Cargando estudiantes...</p>}
             {!loading && !error && students.length === 0 && <p>No hay estudiantes registrados.</p>}
+
             {!loading && !error && students.length > 0 && (
-                <table className="students-table">
-                    <thead>
-                        <tr>
-                            <th className="actions-column">Acciones</th>
-                            <th className='name-column'>Nombre</th>
-                            {selectedSubjectId && <th>Notas</th>}
-                        </tr>
-                    </thead>
-                    <tbody>
+                <>
+                    <div className="table-wrapper">
+                        <table className="students-table">
+                            <thead>
+                                <tr>
+                                    <th className="actions-column">Acciones</th>
+                                    <th className="name-column">Nombre</th>
+                                    {selectedSubjectId && <th>Notas</th>}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {students.map((student) => (
+                                    <StudentRow
+                                        key={student.id}
+                                        data={student}
+                                        onView={handleViewStudent}
+                                        onEdit={handleEditStudent}
+                                        onDelete={handleDeleteStudent}
+                                        selectedSubjectId={selectedSubjectId}
+                                    />
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className="cards-container">
                         {students.map((student) => (
-                            <StudentRow
+                            <StudentCard
                                 key={student.id}
                                 data={student}
                                 onView={handleViewStudent}
                                 onEdit={handleEditStudent}
                                 onDelete={handleDeleteStudent}
-                                {...(selectedSubjectId && {
-                                    onAddGrade: () => {
-                                        setDrawerState({
-                                            open: true,
-                                            student,
-                                            action: 'view',
-                                        });
-                                    },
-                                    selectedSubjectId,
-                                })}
+                                selectedSubjectId={selectedSubjectId}
                             />
                         ))}
-                    </tbody>
-                </table>
+                    </div>
+                </>
             )}
 
             {drawerState.open && (
@@ -179,41 +165,22 @@ const StudentsPage = () => {
                             : 'Detalles del estudiante'
                     }
                     open={drawerState.open}
-                    onClose={() => {
-                        setDrawerState({
-                            ...drawerState,
-                            open: false,
-                            student: null,
-                            action: null,
-                        });
-                    }}
+                    onClose={() => resetDrawerState()}
                 >
                     {['edit', 'create'].includes(drawerState.action!) && (
                         <StudentForm
-                            formType={drawerState.action as 'edit' | 'create'}
+                            formType={drawerState.action! as 'create' | 'edit'}
                             initialData={drawerState.student || undefined}
-                            onCancel={() => {
-                                setDrawerState({
-                                    ...drawerState,
-                                    open: false,
-                                    student: null,
-                                    action: null,
-                                });
-                            }}
+                            onCancel={resetDrawerState}
                             onSubmit={(data) => {
                                 if (drawerState.action === 'create')
                                     addStudent(data as CreateStudentModel);
-                                else editStudent(drawerState.student!.id, data as UpdateStudent);
-
-                                setDrawerState({
-                                    ...drawerState,
-                                    open: false,
-                                    student: null,
-                                    action: null,
-                                });
+                                else editStudent(drawerState.student!.id, data);
+                                resetDrawerState();
                             }}
                         />
                     )}
+
                     {drawerState.action === 'view' && (
                         <ViewStudentDetails
                             studentId={drawerState.student!.id}

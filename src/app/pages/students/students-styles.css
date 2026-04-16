@@ -1,0 +1,177 @@
+.page-container {
+    padding: 1rem;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.table-wrapper {
+    display: block;
+}
+
+.cards-container {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .table-wrapper {
+        display: none;
+    }
+
+    .cards-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+}
+
+.students-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.students-table thead {
+    background: #013E37;
+    color: #fff;
+}
+
+.table-row:hover {
+    background: #f9fafb;
+}
+
+.actions-cell {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.name-cell {
+    font-weight: 500;
+}
+
+.grades-container {
+    display: flex;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.grade-item {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+    border-right: 1px solid #e5e7eb;
+}
+
+.grade-item:last-child {
+    border-right: none;
+}
+
+.subjects-bar {
+    margin: 1rem 0;
+    overflow-x: auto;
+}
+
+.subjects-list {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.subject-tab {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    cursor: pointer;
+    min-width: 90px;
+    transition: all 0.2s ease;
+}
+
+.subject-tab:hover {
+    background: #f3f4f6;
+}
+
+.subject-tab.active {
+    background: #013E37;
+    color: white;
+    border-color: #013E37;
+}
+
+.subject-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.subject-code {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+.student-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111827;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-grades {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.grade-pill {
+    background: #FFEFB3;
+    color: #013E37;
+    padding: 0.25rem 0.55rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.no-grades {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.card-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem;
+}
+
+.card-actions button {
+    width: 100%;
+    padding: 0.35rem;
+}
+
+@media (max-width: 480px) {
+    .card-actions {
+        grid-template-columns: 1fr 1fr;
+    }
+}

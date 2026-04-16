@@ -1,5 +1,4 @@
 import type { Subject } from '../../../data/models/Subject.model';
-import './subject-bar.css';
 
 interface SubjectsBarProps {
     loading: boolean;
@@ -22,17 +21,18 @@ export const SubjectsBar = ({
             {error && <p className="error">Error al cargar materias</p>}
 
             {!loading && !error && (
-                <ul className="subjects-list">
+                <div className="subjects-list">
                     {subjects.map((subject) => (
-                        <li
+                        <button
                             key={subject.id}
                             onClick={() => onSelectSubject(subject.id)}
-                            className={`subject-item ${selectedId === subject.id ? 'active' : ''}`}
+                            className={`subject-tab ${selectedId === subject.id ? 'active' : ''}`}
                         >
-                            {subject.name}
-                        </li>
+                            <span className="subject-name">{subject.name}</span>
+                            <span className="subject-code">{subject.code}</span>
+                        </button>
                     ))}
-                </ul>
+                </div>
             )}
         </div>
     );

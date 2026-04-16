@@ -34,7 +34,7 @@ echo "VITE_BACKEND_URL=http://localhost:7399/api/v1" > .env
 ```
 
 -- Tmabien puedes crearlo de forma manual, crear un archivo llamado ".env" en la raiz del projecto y copia lo siguiente
-"VITE_BACKEND_URL=http://localhost:7399/api/v1"
+"VITE_BACKEND_URL=http://localhost:4997/api/v1"
 
 **3. Levantar la aplicación**
 ```bash
