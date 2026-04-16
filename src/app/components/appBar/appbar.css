@@ -1,17 +1,70 @@
-.app-bar-container {
-    border: 1px solid rgba(1, 62, 55, 0.2);
-    border-radius: 5px;
-    padding: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.app-bar {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    background-color: #fff;
+    align-items: center;
+    padding: 0.6rem 1rem;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid rgba(1, 62, 55, 0.15);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    gap: 1rem;
 }
 
-.app-bar-links {
+.app-bar-left {
     display: flex;
-    gap: 1rem;
-    justify-content: center;
     align-items: center;
+}
+
+.app-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    line-height: 1.1;
+}
+
+.user-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e5e7eb;
+}
+
+/* Mediano */
+@media (max-width: 768px) {
+    .app-bar {
+        padding: 0.5rem 0.7rem;
+    }
+
+    .user-info {
+        display: none;
+    }
+
+    .user-avatar {
+        width: 38px;
+        height: 38px;
+    }
+}
+
+/* Pequeño */
+@media (max-width: 480px) {
+    .app-bar {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .app-bar-left span {
+        font-size: 0.95rem;
+    }
+
+    .user-avatar {
+        width: 34px;
+        height: 34px;
+    }
 }

@@ -4,19 +4,22 @@ import "../appbar.css";
 
 const AppBarDesktop = () => {
   return (
-    <div className="app-bar-container">
-      <HighlightText text="Notas App"/>
+    <div className="app-bar">
+      <div className="app-bar-left">
+        <HighlightText text="Notas App" />
+      </div>
 
-      <div className="app-bar-links">
-        <div>
-          <HighlightText text="Carlos David Mesa Matínez" styles={{lineHeight: '.5rem'}} />
-          <SecondaryText text="Administrador" styles={{lineHeight: '.5rem'}} />
+      <div className="app-bar-right">
+        <div className="user-info">
+          <HighlightText text="Carlos David Mesa Martínez" />
+          <SecondaryText text="Administrador" />
         </div>
-        <img src="/user_.png" alt="User" style={{
-          width: '50px',
-          height: '50px',
-          borderRadius: '50%',
-        }}/>
+
+        <img
+          src="/user_.png"
+          alt="User"
+          className="user-avatar"
+        />
       </div>
     </div>
   );
