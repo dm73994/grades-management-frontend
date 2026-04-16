@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { Subject } from '../../../data/models/Subject.model';
+import Swal from 'sweetalert2';
 
 interface ViewSubjectDetailsProps {
     subjectId: number;
@@ -19,7 +20,16 @@ const ViewSubjectDetails = ({ subjectId, loadSubjectDetails, error }: ViewSubjec
     useEffect(() => {
         fetchDetails();
     }, []);
-    return <div>ViewSubjectDetails</div>;
+
+    useEffect(() => {
+        if (error) {
+            if (subjectId) {
+                fetchDetails();
+            }
+            Swal.fire('Error', error || 'Ocurrió un error inesperado', 'error');
+        }
+    }, [error]);
+    return <div>{JSON.stringify(subject)}</div>;
 };
 
 export default ViewSubjectDetails;

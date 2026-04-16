@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-type RequestError = {
+export type RequestError = {
     message: string;
     code?: string;
 };

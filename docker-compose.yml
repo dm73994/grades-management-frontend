@@ -1,0 +1,8 @@
+services:
+  notas-frontend:
+    build: .
+    container_name: notas-frontend
+    ports:
+      - "4997:80"
+    environment:
+      - VITE_BACKEND_URL=${VITE_BACKEND_URL}

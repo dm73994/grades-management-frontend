@@ -12,7 +12,6 @@ interface StudentRowProps {
     onView?: (student: Student) => void;
     onEdit?: (student: Student) => void;
     onDelete?: (student: Student) => void;
-    onAddGrade?: (student: Student) => void;
     selectedSubjectId?: number | null;
 }
 
@@ -21,7 +20,6 @@ const StudentRow = ({
     onView,
     onEdit,
     onDelete,
-    onAddGrade,
     selectedSubjectId,
 }: StudentRowProps) => {
     const { grades, fetchGrades, loading, addGrade, error } = useGrades();
